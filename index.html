@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/NDBI2018_1.js"></script>
+        <script src="data/NDBI2023_2.js"></script>
+        <script src="data/BatasAdministrasiKotaBandung_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_GoogleSatelite_0');
+        map.getPane('pane_GoogleSatelite_0').style.zIndex = 400;
+        var layer_GoogleSatelite_0 = L.tileLayer('https://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatelite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleSatelite_0;
+        map.addLayer(layer_GoogleSatelite_0);
+        function pop_NDBI2018_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Keterangan</th>\
+                        <td>' + (feature.properties['Keterangan'] !== null ? autolinker.link(feature.properties['Keterangan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Luas</th>\
+                        <td>' + (feature.properties['Luas'] !== null ? autolinker.link(feature.properties['Luas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NDBI2018_1_0(feature) {
+            switch(String(feature.properties['Keterangan'])) {
+                case 'Kepadatan Bangunan Sedang':
+                    return {
+                pane: 'pane_NDBI2018_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,239,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tingkat Kepadatan Bangunan Rendah':
+                    return {
+                pane: 'pane_NDBI2018_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,209,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tingkat Kepadatan Bangunan Tinggi':
+                    return {
+                pane: 'pane_NDBI2018_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,37,18,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NDBI2018_1');
+        map.getPane('pane_NDBI2018_1').style.zIndex = 401;
+        map.getPane('pane_NDBI2018_1').style['mix-blend-mode'] = 'normal';
+        var layer_NDBI2018_1 = new L.geoJson(json_NDBI2018_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NDBI2018_1',
+            layerName: 'layer_NDBI2018_1',
+            pane: 'pane_NDBI2018_1',
+            onEachFeature: pop_NDBI2018_1,
+            style: style_NDBI2018_1_0,
+        });
+        bounds_group.addLayer(layer_NDBI2018_1);
+        map.addLayer(layer_NDBI2018_1);
+        function pop_NDBI2023_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Keterangan</th>\
+                        <td>' + (feature.properties['Keterangan'] !== null ? autolinker.link(feature.properties['Keterangan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Luas</th>\
+                        <td>' + (feature.properties['Luas'] !== null ? autolinker.link(feature.properties['Luas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NDBI2023_2_0(feature) {
+            switch(String(feature.properties['Keterangan'])) {
+                case 'Tingkat Kepadatan Bangunan Rendah':
+                    return {
+                pane: 'pane_NDBI2023_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(93,239,44,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tingkat Kepadatan Bangunan Sedang':
+                    return {
+                pane: 'pane_NDBI2023_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,209,27,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tingkat Kepadatan Bangunan Tinggi':
+                    return {
+                pane: 'pane_NDBI2023_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,37,18,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NDBI2023_2');
+        map.getPane('pane_NDBI2023_2').style.zIndex = 402;
+        map.getPane('pane_NDBI2023_2').style['mix-blend-mode'] = 'normal';
+        var layer_NDBI2023_2 = new L.geoJson(json_NDBI2023_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NDBI2023_2',
+            layerName: 'layer_NDBI2023_2',
+            pane: 'pane_NDBI2023_2',
+            onEachFeature: pop_NDBI2023_2,
+            style: style_NDBI2023_2_0,
+        });
+        bounds_group.addLayer(layer_NDBI2023_2);
+        map.addLayer(layer_NDBI2023_2);
+        function pop_BatasAdministrasiKotaBandung_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Kecamatan</strong><br />' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BatasAdministrasiKotaBandung_3_0() {
+            return {
+                pane: 'pane_BatasAdministrasiKotaBandung_3',
+                opacity: 1,
+                color: 'rgba(92,243,92,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_BatasAdministrasiKotaBandung_3');
+        map.getPane('pane_BatasAdministrasiKotaBandung_3').style.zIndex = 403;
+        map.getPane('pane_BatasAdministrasiKotaBandung_3').style['mix-blend-mode'] = 'normal';
+        var layer_BatasAdministrasiKotaBandung_3 = new L.geoJson(json_BatasAdministrasiKotaBandung_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasAdministrasiKotaBandung_3',
+            layerName: 'layer_BatasAdministrasiKotaBandung_3',
+            pane: 'pane_BatasAdministrasiKotaBandung_3',
+            onEachFeature: pop_BatasAdministrasiKotaBandung_3,
+            style: style_BatasAdministrasiKotaBandung_3_0,
+        });
+        bounds_group.addLayer(layer_BatasAdministrasiKotaBandung_3);
+        map.addLayer(layer_BatasAdministrasiKotaBandung_3);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/BatasAdministrasiKotaBandung_3.png" /> Batas Administrasi Kota Bandung': layer_BatasAdministrasiKotaBandung_3,'NDBI 2023 <br /><table><tr><td style="text-align: center;"><img src="legend/NDBI2023_2_TingkatKepadatanBangunanRendah0.png" /></td><td>Tingkat Kepadatan Bangunan Rendah</td></tr><tr><td style="text-align: center;"><img src="legend/NDBI2023_2_TingkatKepadatanBangunanSedang1.png" /></td><td>Tingkat Kepadatan Bangunan Sedang</td></tr><tr><td style="text-align: center;"><img src="legend/NDBI2023_2_TingkatKepadatanBangunanTinggi2.png" /></td><td>Tingkat Kepadatan Bangunan Tinggi</td></tr></table>': layer_NDBI2023_2,'NDBI 2018 <br /><table><tr><td style="text-align: center;"><img src="legend/NDBI2018_1_KepadatanBangunanSedang0.png" /></td><td>Kepadatan Bangunan Sedang</td></tr><tr><td style="text-align: center;"><img src="legend/NDBI2018_1_TingkatKepadatanBangunanRendah1.png" /></td><td>Tingkat Kepadatan Bangunan Rendah</td></tr><tr><td style="text-align: center;"><img src="legend/NDBI2018_1_TingkatKepadatanBangunanTinggi2.png" /></td><td>Tingkat Kepadatan Bangunan Tinggi</td></tr></table>': layer_NDBI2018_1,"Google Satelite": layer_GoogleSatelite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_BatasAdministrasiKotaBandung_3,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Kecamatan'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_BatasAdministrasiKotaBandung_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_BatasAdministrasiKotaBandung_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_BatasAdministrasiKotaBandung_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_BatasAdministrasiKotaBandung_3]);
+        });
+        </script>
+    </body>
+</html>
